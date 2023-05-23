@@ -1,0 +1,73 @@
+#include "shell.h"
+
+/**
+ * interactive - true is returned only when the shell is in interactive mode
+ * @info: info_t struct
+ * Description: true is returned only when the shell is in interactive mode
+ * Return: returns 1 for success and 0 otherwise
+ */
+int interactive(info_t *info)
+{
+return (isatty(STDIN_FILENO) && info->readfd <= 2);
+}
+
+/**
+ * is_delim - verifies if char is a delimeter
+ * @c: the char to be checked
+ * @delim: delimeter string
+ * Description: verifies if char is a delimeter
+ * Return: returns 1 when true, 0 otherwise
+ */
+int is_delim(char c, char *delim)
+{
+while (*delim)
+if (*delim++ == c)
+return (1);
+return (0);
+}
+
+/**
+ * _isalpha - verifies if a character is alphabetic
+ * @c: char
+ * Description: verifies if a character is alphabetic
+ * Return: returns 1 when c is alphabetic and 0 otherwise
+ */
+
+int _isalpha(int c)
+{
+if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+return (1);
+else
+return (0);
+}
+
+/**
+ * _atoi - converts the given string to an integer
+ * @s: the string that will be converted
+ * Description: converts the given string to an integer
+ * Return: returns 0 when no number in string and converts otherwise
+ */
+
+int _atoi(char *s)
+{
+int i, sign = 1, flag = 0, output;
+unsigned int res = 0;
+for (i = 0;  s[i] != '\0' && flag != 2; i++)
+{
+if (s[i] == '-')
+sign *= -1;
+if (s[i] >= '0' && s[i] <= '9')
+{
+flag = 1;
+res *= 10;
+res += (s[i] - '0');
+}
+else if (flag == 1)
+flag = 2;
+}
+if (sign == -1)
+output = -res;
+else
+output = res;
+return (output);
+}
